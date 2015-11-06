@@ -6,9 +6,9 @@ Template.userdetails_debug.helpers({
 		return Math.max(0, utils.timeDiffReactive(this.commandExpiration, this.commandDuration) * 100);
 	},
 	verbpanel_class: function() {
-		return Session.get('commandpanelopen')=='VERB'? 'open' : '';
+		return Session.get('commandpanelopen')=='VERB'? 'state-open' : '';
 	},
 	objectpanel_class: function() {
-		return Session.get('commandpanelopen')=='OBJECT'? 'open' : '';
+		return Session.get('commandpanelopen')=='OBJECT'? 'state-open' : '';
 	}
 });

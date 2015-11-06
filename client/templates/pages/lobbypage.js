@@ -8,7 +8,7 @@ Template.lobbypage.helpers({
 });
 
 Template.lobbypage.events({
-	'click .add-room': function () {
+	'click .evt-addroom': function () {
 		Rooms.insert({
 			_id: utils.makeid(),
 			createdAt: new Date()
