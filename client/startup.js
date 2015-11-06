@@ -4,12 +4,14 @@ Meteor.startup(function () {
 	Meteor.call('newUser', { 
 			handle: utils.makehandle(),
 			command_verbs: [
-				'bust',
-				'clear'
+				generator.templates.verb(),
+				generator.templates.verb(),
+				generator.templates.verb()
 			],
 			command_objects: [
-				'cache',
-				'firewall'
+				generator.templates.noun(),
+				generator.templates.noun(),
+				generator.templates.noun()
 			]
 		}, 
 		function(error, id) {

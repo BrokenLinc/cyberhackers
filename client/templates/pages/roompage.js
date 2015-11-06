@@ -53,5 +53,5 @@ function panelstate(setvalue) {
 		Session.set('commandpanelopen', setvalue);
 		return setvalue;
 	}
-	return Session.get('commandverb');
+	return Session.get('commandpanelopen');
 }
