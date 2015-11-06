@@ -3,9 +3,7 @@ Meteor.methods({
 		Users.remove(id);
 	},
 	issueCommandToRoom: function(room, expiresInSeconds) {
-		//console.log(room.urlid);
-		//Users.update({room_urlid: room.urlid}, {$set: {command:'test command '+ Math.floor(Math.random()*1000)}});
-		var users = Users.find({room_urlid:room.urlid});
+		var users = Users.find({room_id:room._id});
 		var actorIndex = Math.floor(Math.random()*users.count());
 		var recipientIndex = Math.floor(Math.random()*users.count());
 		
@@ -33,7 +31,7 @@ Meteor.methods({
 			i++;
 		});
 
-		Rooms.update({urlid: room.urlid}, {$set: {
+		Rooms.update(room._id, {$set: {
 			lastCommandIssuedAt: new Date().getTime()
 		}})
 	},
@@ -43,7 +41,7 @@ Meteor.methods({
 	kickIdleUsers: function() {
 		Users.update(
 			{updatedAt:{$lt:new Date().getTime()-3000}},
-			{$set:{room_urlid: null}},
+			{$set:{room_id: null}},
 			{multi:true}
 		);
 	},
