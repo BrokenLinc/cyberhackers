@@ -2,16 +2,20 @@
 <ul>
 	<li>Handle: {{handle}}</li>
 	<li>Strikes: {{stikes}}</li>
-	<li class="{{verbpanel_class}}">Verbs: <ol>
-		{{#each command_verbs}}
-			<li>{{this}}</li>
-		{{/each}}
-	</ol></li>
-	<li class="{{objectpanel_class}}">Objects: <ol>
-		{{#each command_objects}}
-			<li>{{this}}</li>
-		{{/each}}
-	</ol></li>
+	<li class="{{verbpanel_class}}">Verbs: 
+		<ol>
+			{{#each command_verbs}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ol>
+	</li>
+	<li class="{{objectpanel_class}}">Objects: 
+		<ol>
+			{{#each command_objects}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ol>
+	</li>
 	{{#if command}}
 		<li>Command: {{command}}</li>
 		<li>Command Expiration: {{commandExpiration}}</li>

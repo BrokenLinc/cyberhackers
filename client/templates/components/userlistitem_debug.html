@@ -1,13 +1,17 @@
 <template name="user">
-  <li>{{handle}} |
+	<li>{{handle}} |
+	
 	{{#if strikes}}
 		{{strikes}}
-	{{else}}
+		{{else}}
 		no
 	{{/if}}
-  strikes
-  {{#if command}}
-  	| command: {{command}}
-  {{/if}}
-  </li>
+
+	strikes
+
+	{{#if command}}
+		| command: {{command}}
+	{{/if}}
+
+	</li>
 </template>
