@@ -3,7 +3,7 @@ Template.lobbypage.helpers({
 		return Rooms.find();
 	},
 	users: function () {
-		return Users.find({room_urlid: null});
+		return Users.find({room_id: null});
 	}
 });
 

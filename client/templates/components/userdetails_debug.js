@@ -1,4 +1,4 @@
-Template.userdebug.helpers({
+Template.userdetails_debug.helpers({
 	countdown: function() {
 		return utils.fromNowReactive(this.commandExpiration);
 	},

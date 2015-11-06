@@ -1,6 +1,5 @@
-<template name="roomdebug">
+<template name="roomdetails_debug">
 	<ul>
-		<li>urlid: {{urlid}}</li>
 		<li>State: {{state}}</li>
 
 		{{#if isOver}}
@@ -21,12 +20,11 @@
 		<li><button class="start-game">Start game</button></li>
 		{{/if}}
 
-		users in room
 
-		<li>
+		<li>users in room
 			<ul>
 			{{#each users}}
-				{{> user}}
+				<li>{{> userlistitem_debug}}</li>
 			{{/each}}
 			</ul>
 		</li>

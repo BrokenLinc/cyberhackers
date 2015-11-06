@@ -1,3 +1,5 @@
+var questionEverySeconds = 10; //Could be a config value
+
 Meteor.methods({
 	deleteUser: function(id) {
 		Users.remove(id);
@@ -25,31 +27,43 @@ Meteor.methods({
 			Users.update({_id: user._id}, {$set:{
 				command: i==recipientIndex? command : '',
 				commandDuration: i==recipientIndex? expiresInSeconds*1000 : null,
-				commandExpiration: i==recipientIndex? new Date().getTime() + expiresInSeconds*1000 : null,
+				commandExpiration: i==recipientIndex? utils.nowTicks() + expiresInSeconds*1000 : null,
 				strikes: user.command? user.strikes+1 : user.strikes
 			}});
 			i++;
 		});
 
 		Rooms.update(room._id, {$set: {
-			lastCommandIssuedAt: new Date().getTime()
+			lastCommandIssuedAt: utils.nowTicks()
 		}})
 	},
 	removeIdleUsers: function() {
-		Users.remove({updatedAt:{$lt:new Date().getTime()-3000}});
+		Users.remove({updatedAt:{$lt:utils.nowTicks() - 3000}}); //allow 3 seconds for lag
 	},
-	kickIdleUsers: function() {
-		Users.update(
-			{updatedAt:{$lt:new Date().getTime()-3000}},
-			{$set:{room_id: null}},
-			{multi:true}
-		);
-	},
-	endGames: function() {
+	// kickIdleUsers: function() {
+	// 	Users.update(
+	// 		{updatedAt:{$lt:utils.nowTicks() - 3000}},
+	// 		{$set:{room_id: null}},
+	// 		{multi:true}
+	// 	);
+	// },
+	endExpiredGames: function() {
 		Rooms.update(
-			{endsAt:{$lt:new Date().getTime()}},
+			{endsAt:{$lt:utils.nowTicks()}},
 			{$set:{state:'GAME_OVER'}},
 			{multi:true}
 		);
+	},
+	issueCommandsToRooms: function() {
+		var questionDeadline = utils.nowTicks() - 1000*questionEverySeconds;
+		
+		var rooms = Rooms.find({lastCommandIssuedAt:{$lt:questionDeadline}});
+		if(rooms.count()>0) {
+			rooms.forEach(function(room) {
+				if(room.endsAt > utils.nowTicks()) {
+					Meteor.call('issueCommandToRoom', room, questionEverySeconds);
+				}
+			});
+		}
 	}
 });

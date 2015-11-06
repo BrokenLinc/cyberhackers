@@ -2,15 +2,19 @@
 	<h1>Lobby</h1>
 	<button class="add-room">New Room</button>
 	<h3>Rooms</h3>
+
 	<ul>
 	{{#each rooms}}
-		{{> room}}
+		<li>{{> roomlistitem_debug}}</li>
 	{{/each}}
 	</ul>
+
 	<h3>Hackers in lobby</h3>
+
 	<ul>
 	{{#each users}}
-		{{> user}}
+		<li>{{> userlistitem_debug}}</li>
 	{{/each}}
 	</ul>
+
 </template>

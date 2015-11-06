@@ -2,15 +2,15 @@
 	{{#if currentUser}}
 		<h6><a href="/">Back to Lobby</a></h6>
 
+		{{#with room}}
+			<h3>room {{_id}}</h3>
+			{{> roomdetails_debug}}
+	  	{{/with}}
+
 		{{#with currentUser}}
 			<h3>currentUser debug</h3>
-			{{> userdebug}}
+			{{> userdetails_debug}}
 		{{/with}}
-
-		{{#with room}}
-			<h3>room debug</h3>
-			{{> roomdebug}}
-	  	{{/with}}
 	  	
 	{{/if}}
 </template>

@@ -1,4 +1,4 @@
-Template.roomdebug.helpers({
+Template.roomdetails_debug.helpers({
 	users: function() {
 		return Users.find({room_id: this._id});
 	},
@@ -16,7 +16,7 @@ Template.roomdebug.helpers({
 	}
 });
 
-Template.roomdebug.events({
+Template.roomdetails_debug.events({
 	'click .start-game': function() {
 		Meteor.call('startGame', this._id);
 	},
