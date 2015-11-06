@@ -1,0 +1,29 @@
+<template name="roomdebug">
+<ul>
+  <li>urlid: {{urlid}}</li>
+  <li>State: {{state}}</li>
+	{{#if isOver}}
+		<li><button class="start-game">New game</button></li>
+	{{/if}}
+	{{#if isPlaying}}
+		<li>Countdown: {{countdown}}</li>
+		<li>
+  		<form class="submit-command">
+  			<input type="text" name="command" placeholder="type command here" />
+  		</form>
+		</li>
+		<li><button class="start-game">Restart game</button></li>
+	{{/if}}
+	{{#if isPregame}}
+  		<li><button class="start-game">Start game</button></li>
+  	{{/if}}
+	<li>
+		users in room
+		<ul>
+		{{#each users}}
+			{{> user}}
+		{{/each}}
+		</ul>
+	</li>
+</ul>
+</template>

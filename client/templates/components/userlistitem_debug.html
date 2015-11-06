@@ -1,0 +1,13 @@
+<template name="user">
+  <li>{{handle}} |
+	{{#if strikes}}
+		{{strikes}}
+	{{else}}
+		no
+	{{/if}}
+  strikes
+  {{#if command}}
+  	| command: {{command}}
+  {{/if}}
+  </li>
+</template>

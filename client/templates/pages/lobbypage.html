@@ -1,0 +1,16 @@
+<template name="lobbypage">
+	<h1>Lobby</h1>
+	<button class="add-room">New Room</button>
+	<h3>Rooms</h3>
+	<ul>
+	{{#each rooms}}
+		{{> room}}
+	{{/each}}
+	</ul>
+	<h3>Hackers in lobby</h3>
+	<ul>
+	{{#each users}}
+		{{> user}}
+	{{/each}}
+	</ul>
+</template>

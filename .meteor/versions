@@ -39,6 +39,7 @@ iron:location@1.0.11
 iron:middleware-stack@1.0.11
 iron:router@1.0.12
 iron:url@1.0.11
+johnantoni:meteor-normalize@0.0.1
 jquery@1.11.4
 launch-screen@1.0.4
 less@2.5.0_3

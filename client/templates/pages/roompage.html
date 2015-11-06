@@ -1,0 +1,15 @@
+<template name="roompage">
+	{{#if currentUser}}
+		<h6><a href="/">Back to Lobby</a></h6>
+
+		{{#with currentUser}}
+			<h3>currentUser debug</h3>
+			{{> userdebug}}
+		{{/with}}
+
+		{{#with room}}
+			<h3>room debug</h3>
+			{{> roomdebug}}
+	  	{{/with}}
+	{{/if}}
+</template>
