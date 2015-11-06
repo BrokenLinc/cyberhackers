@@ -3,7 +3,7 @@ Template.roompage.helpers({
 		return Users.findOne({_id: Session.get('userid')});
 	},
 	room: function () {
-		return Rooms.findOne({urlid: this.urlid});
+		return Rooms.findOne(this.room_id);
 	}
 });
 
@@ -12,9 +12,9 @@ Template.roompage.onCreated(function(){
 });
 
 Template.roompage.onRendered(function(){
-
-	$(window).on('keydown', {room_urlid:this.data.urlid}, onRoomPageKeyDown);
+	$(window).on('keydown', {room_id:this.data.room_id}, onRoomPageKeyDown);
 });
+
 Template.roompage.onDestroyed(function(){
 	$(window).off('keydown', onRoomPageKeyDown);
 });
@@ -42,7 +42,7 @@ function onRoomPageKeyDown(e){
 			var command = [Session.get('commandverb'), currentUser.command_objects[index]].join(' the ');
 			Session.set('commandverb', null);
 
-			Meteor.call('submitCommand', command, e.data.room_urlid);
+			Meteor.call('submitCommand', command, e.data.room_id);
 		}
 	}
 }

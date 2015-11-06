@@ -1,6 +1,6 @@
 Template.roomdebug.helpers({
 	users: function() {
-		return Users.find({room_urlid: this.urlid});
+		return Users.find({room_id: this._id});
 	},
 	isPregame: function() {
 		return this.state == 'PREGAME';
@@ -18,15 +18,12 @@ Template.roomdebug.helpers({
 
 Template.roomdebug.events({
 	'click .start-game': function() {
-		Meteor.call('startGame', this.urlid);
+		Meteor.call('startGame', this._id);
 	},
 	'submit .submit-command': function (event) {
 		event.preventDefault();
 		var command = event.target.command.value;
 
-		Meteor.call('submitCommand', command, this.urlid);
-	},
-	'keydown body': function(event) {
-		console.log(event);
+		Meteor.call('submitCommand', command, this._id);
 	}
 });
