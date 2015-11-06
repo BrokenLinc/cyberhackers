@@ -1,0 +1,124 @@
+<template name="PageTemplate">
+	<head>
+	  <title>realhacks</title>
+	</head>
+
+	<body>
+		{{> yield}}
+	</body>
+</template>
+
+<template name="HomePage">
+	<h1>Lobby</h1>
+	{{> hello}}
+</template>
+
+<template name="hello">
+	<button class="add-room">New Room</button>
+	<h3>Rooms</h3>
+	<ul>
+	{{#each rooms}}
+		{{> room}}
+	{{/each}}
+	</ul>
+	<h3>Hackers in lobby</h3>
+	<ul>
+	{{#each users}}
+		{{> user}}
+	{{/each}}
+	</ul>
+</template>
+
+<template name="room">
+  <li><a href="/{{urlid}}">{{urlid}}</a>
+		<ul>
+		{{#each users}}
+			{{> user}}
+		{{/each}}
+		</ul>
+	</li>
+</template>
+
+<template name="user">
+  <li>{{handle}} |
+	{{#if strikes}}
+		{{strikes}}
+	{{else}}
+		no
+	{{/if}}
+  strikes
+  {{#if command}}
+  	| command: {{command}}
+  {{/if}}
+  </li>
+</template>
+
+<template name="RoomPage">
+	{{#if currentUser}}
+		<h6><a href="/">Back to Lobby</a></h6>
+
+		{{#with currentUser}}
+			<h3>currentUser debug</h3>
+			{{> userdebug}}
+		{{/with}}
+
+		{{#with room}}
+			<h3>room debug</h3>
+			{{> roomdebug}}
+	  	{{/with}}
+	{{/if}}
+</template>
+
+<template name="userdebug">
+<ul>
+	<li>Handle: {{handle}}</li>
+	<li>Strikes: {{stikes}}</li>
+	<li class="{{verbpanel_class}}">Verbs: <ol>
+		{{#each command_verbs}}
+			<li>{{this}}</li>
+		{{/each}}
+	</ol></li>
+	<li class="{{objectpanel_class}}">Objects: <ol>
+		{{#each command_objects}}
+			<li>{{this}}</li>
+		{{/each}}
+	</ol></li>
+	{{#if command}}
+		<li>Command: {{command}}</li>
+		<li>Command Expiration: {{commandExpiration}}</li>
+		<li>Countdown: {{countdown}}</li>
+		<li>Countdown Percent: {{countdown_percent}}</li>
+		<li><div style="background:black;height:10px;width:{{countdown_percent}}%;"></div></li>
+	{{/if}}
+</ul>
+</template>
+
+<template name="roomdebug">
+<ul>
+  <li>urlid: {{urlid}}</li>
+  <li>State: {{state}}</li>
+	{{#if isOver}}
+		<li><button class="start-game">New game</button></li>
+	{{/if}}
+	{{#if isPlaying}}
+		<li>Countdown: {{countdown}}</li>
+		<li>
+  		<form class="submit-command">
+  			<input type="text" name="command" placeholder="type command here" />
+  		</form>
+		</li>
+		<li><button class="start-game">Restart game</button></li>
+	{{/if}}
+	{{#if isPregame}}
+  		<li><button class="start-game">Start game</button></li>
+  	{{/if}}
+	<li>
+		users in room
+		<ul>
+		{{#each users}}
+			{{> user}}
+		{{/each}}
+		</ul>
+	</li>
+</ul>
+</template>
