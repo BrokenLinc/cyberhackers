@@ -11,6 +11,7 @@
 			<h3>currentUser debug</h3>
 			{{> userdetails_debug}}
 		{{/with}}
-	  	
+	{{else}}
+		<div class="lagsafe">Logged out due to inactivity.</div>
 	{{/if}}
 </template>
