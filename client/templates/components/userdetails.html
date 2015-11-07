@@ -1,7 +1,8 @@
-<template name="userdetails_debug">
+<template name="userdetails">
 <ul>
-	<li>Handle: {{handle}}</li>
+	<li>{{handle}}</li>
 	<li>Strikes: {{stikes}}</li>
+
 	<li class="panel_debug {{verbpanel_class}}">Verbs: 
 		<ol>
 			{{#each command_verbs}}
@@ -9,6 +10,7 @@
 			{{/each}}
 		</ol>
 	</li>
+
 	<li class="panel_debug {{objectpanel_class}}">Objects: 
 		<ol>
 			{{#each command_objects}}
@@ -16,11 +18,10 @@
 			{{/each}}
 		</ol>
 	</li>
+
 	{{#if command}}
 		<li>Command: {{command}}</li>
-		<li>Command Expiration: {{commandExpiration}}</li>
 		<li>Countdown: {{countdown}}</li>
-		<li>Countdown Percent: {{countdown_percent}}</li>
 		<li><div class="countdownbar" style="width:{{countdown_percent}}%;"></div></li>
 	{{/if}}
 </ul>

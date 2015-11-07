@@ -1,19 +1,23 @@
 @green: #0c0;
 @cyan: #0ee;
 @red: #c00;
+@black: black;
 @white: white;
+@borderwidth: 3px;
+@gray: #999;
+@darkgray: #444;
 
 * {
 	box-sizing:border-box;
 }
 
 body {
-	background:black;
-	color: @green;
 	font-family: Courier;
 	font-size:1.5vw;
-	line-height: 2vw;
 	line-height: 1.25em;
+
+	background:black;
+	color: @green;
 }
 
 a {
@@ -21,21 +25,22 @@ a {
 	text-decoration: none;
 
 	&:hover {
-		//text-decoration: underline;
 		background-color:@cyan;
 		color:black;
 	}
 }
 
 ul {
-	list-style:none;
 	padding:0;
 	margin:0;
 
+	list-style:none;
+
 	> li {
-		border-left:5px solid @green;
 		margin: 5px 0 0 20px;
 		padding-left:5px;
+
+		border-left:5px solid @green;
 	}
 }
 
@@ -50,48 +55,71 @@ ol {
 }
 
 button {
-	background: transparent;
-	border: 3px solid @cyan;
-	color:@cyan;
+	padding:0 1.2em;
+
 	font-weight: bold;
 	text-transform: uppercase;
 	line-height: 2.4em;
-	padding:0 1.2em;
+
+	background: transparent;
+	border: @borderwidth solid @cyan;
+	color:@cyan;
 
 	&:hover {
-		//text-decoration: underline;
 		background-color:@cyan;
 		color:black;
 	}
 }
 
 input[type="text"] {
+	padding:0 1.2em;
+
+	line-height: 2.4em;
+
 	background:transparent;
 	border: 0 none;
-	border-bottom:3px solid @green;
+	border-bottom:@borderwidth solid @green;
 	color: @white;
-	line-height: 2.4em;
-	padding:0 1.2em;
 	outline:none;
 	background: fade(@white, 18);
 }
 
 .canvas {
-	position: absolute;
 	width:100vw;
 	height:100vw * 9/16;
-	top:50%;
-	left:50%;
-	transform:translate(-50%, -50%);
+
+	position:relative;
+
+	// position: absolute;
+	// top:50%;
+	// left:50%;
+	// transform:translate(-50%, -50%);
 }
 .console {
-	border:2px solid @green;
 	position: absolute;
 	width:90vw;
 	height:100vw * 9/16 -  10vw;
 	top:5vw;
 	left:5vw;
 	overflow:hidden;
+	
+	border:@borderwidth solid @green;
+}
+.panel {
+	display:none;
+
+	position:absolute;
+	z-index:2;
+
+	border:@borderwidth solid @green;
+
+	&.state-open {
+		display:block;
+	}
+}
+.panel_debug.state-open {
+	color:red;
+	font-weight: bold;
 }
 .console-content {
 	position:absolute;
@@ -104,29 +132,32 @@ input[type="text"] {
 		}
 	}
 	> .status {
-		color:#999;
+		color:@gray;
 	}
 	> .error {
-		color:#c00;
+		color:@red;
 	}
 }
 .danger-bar {
-	border:2px solid #c00;
 	position: absolute;
 	width:60vw;
 	height:5vw;
 	top:2.5vw;
 	right:2.5vw;
-	background: black;
+
 	font-size:3vw;
-	color:white;
 	text-align: center;
 
+	border:@borderwidth solid @red;
+	background: black;
+	color:white;
+
 	> .progress {
-		border:2px solid black;
-		background:#c00;
 		height:100%;
 		width:0%;
+
+		border:@borderwidth solid black;
+		background:@red;
 	}
 
 	> .label {
@@ -135,53 +166,54 @@ input[type="text"] {
 		left:50%;
 		transform:translate(-50%, -50%);
 		width:100%;
+
 		text-transform: uppercase;
 	}
 }
 .keyboard-map {
-	border:2px solid #0cc;
 	position: absolute;
 	width:32vw;
 	height:10.5vw;
 	bottom:5vh;
 	right:5vw;
-	background: black;
+	padding:0.5vw;
+
 	text-align: center;
 	font-size:0;
 	line-height: 0;
-	padding:0.5vw;
+
+	border:@borderwidth solid @cyan;
+	background: black;
 
 	> div {
+		display:inline-block;
 		width:3vw;
 		height:3vw;
-		background:#444;
+
+		background:@darkgray;
 		border:1px solid black;
-		display:inline-block;
 
 		&.pressed {
-			background:#0cc;
+			background:@cyan;
 		}
 	}
 }
 .vmin-canvas {
-	background-color:darken(@green, 30);
+	position:fixed;
 	width:100vmin;
 	height:100vmin * 9/16;
-	position:fixed;
 	top:50%;
 	left:50%;
 	transform:translate(-50%, -50%);
+
+	background-color:darken(@green, 30);
 }
 
 
-
-.state-open {
-	font-weight: bold;
-	color:red;
-}
 .countdownbar {
-	background:@red;
 	height:20px;
+
+	background:@red;
 }
 @keyframes delayedfade {
     0% {opacity: 0;}

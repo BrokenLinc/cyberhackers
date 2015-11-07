@@ -1,4 +1,4 @@
-Template.roompage.helpers({
+Template.roompage_debug.helpers({
 	currentUser: function() {
 		return utils.currentUser();
 	},
@@ -7,16 +7,16 @@ Template.roompage.helpers({
 	}
 });
 
-Template.roompage.onCreated(function(){
+Template.roompage_debug.onCreated(function(){
 	// Always start with command panel closed
 	panelstate('NONE');
 });
 
 // Catch keypresses while on this page
-Template.roompage.onRendered(function(){
+Template.roompage_debug.onRendered(function(){
 	$(window).on('keydown', {room_id:this.data.room_id}, onKeyDown);
 });
-Template.roompage.onDestroyed(function(){
+Template.roompage_debug.onDestroyed(function(){
 	$(window).off('keydown', onKeyDown);
 });
 
