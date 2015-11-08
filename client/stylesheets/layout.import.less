@@ -1,0 +1,146 @@
+@keyframes delayedfade {
+    0% {opacity: 0;}
+    99% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.delayedfade {
+	animation-name: delayedfade;
+	animation-duration: 1s;
+}
+
+// Block item list
+ul.mod-blocked {
+	font-weight: bold;
+
+	li {
+		margin:0;
+		border:0 none;
+		background: fade(@green, 30);
+		padding: 0.6vw 1.2vw;
+	}
+	li + li {
+		margin-top: 0.6vw;
+	}
+}
+
+// Panels
+.panel {
+	position:absolute;
+	display:block;
+
+	background: black;
+	border: 0.4vw solid @green;
+	padding: 0.8vw;
+}
+.panel-gameclock {
+	z-index: 15;
+
+	top:4vw;
+	left:8vw;
+	padding:2vw;
+
+	font-size:7vw;
+	line-height: 6vw;
+	letter-spacing: -0.1em;
+}
+.panel-clueprogress {
+	z-index: 20;
+
+	top:13.5vw;
+	left:12vw;
+	width: 76vw;
+	height: 7vw;
+	
+}
+.panel-gamemenu {
+	right:4vw;
+	top:4vw;
+	
+}
+.panel-userlist {
+	z-index: 20;
+
+	top:24vw;
+	right:4vw;
+	width:36vw;
+}
+.panel-user {
+	display: none;
+}
+.panel-strikes {
+	display: none;
+}
+.panel-console {
+	z-index: 10;
+
+	top:19vw;
+	left:4vw;
+	width: 60vw;
+	bottom:4vw;
+
+}
+.panel-command {
+	z-index: 900;
+
+	width:80vw;
+	top:40vw;
+	left:10vw;
+}
+.panel-commandlist {
+	display:none;
+
+	z-index: 1000;
+	width:40vw;
+	top:17vw;
+	left:30vw;
+
+	&.state-open {
+		display:block;
+	}
+}
+
+// Hacker console
+.console {
+	height:100%;
+	overflow: hidden;
+	position: relative;
+}
+.console-content {
+	position:absolute;
+	padding:10px;
+	bottom:0;
+
+	> div {
+		&:before {
+			content: "> ";
+		}
+
+		&:last-child {
+		}
+	}
+	> .status {
+		color:@gray;
+	}
+	> .error {
+		color:@red;
+	}
+}
+
+
+// Progress bar
+.progressbar {
+	height:100%;
+
+	&.mod-danger {
+		.progressbar-fill {
+			background: @red;
+		}
+	}
+}
+.progressbar-fill {
+	background: @green;
+	height:100%;
+}
+.progressbar-label {
+	
+}

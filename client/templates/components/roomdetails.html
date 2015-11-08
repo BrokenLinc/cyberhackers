@@ -1,25 +1,35 @@
 <template name="roomdetails">
-	<ul>
+
+	<div class="panel panel-gameclock">
+		{{countdown}}
+	</div>
+
+	<div class="panel panel-clueprogress">
+		<div class="progressbar">
+			<div class="progressbar-fill" style="width:50%;"></div>
+		</div>
+	</div>
+
+	<div class="panel panel-gamemenu">
 		{{#if isOver}}
-		<li><button class="evt-startgame">New game</button></li>
+		<button class="evt-startgame">New game</button>
 		{{/if}}
 
 		{{#if isPlaying}}
-		<li>Countdown: {{countdown}}</li>
-		<li><button class="evt-startgame">Restart game</button></li>
+		<button class="evt-startgame">Restart game</button>
 		{{/if}}
 
 		{{#if isPregame}}
-		<li><button class="evt-startgame">Start game</button></li>
+		<button class="evt-startgame">Start game</button>
 		{{/if}}
+	</div>
 
+	<div class="panel panel-userlist">
+		<ul class="mod-blocked">
+		{{#each users}}
+			<li>{{handle}}</li>
+		{{/each}}
+		</ul>
+	</div>
 
-		<li>users in room
-			<ul>
-			{{#each users}}
-				<li>{{> userlistitem_debug}}</li>
-			{{/each}}
-			</ul>
-		</li>
-	</ul>
 </template>

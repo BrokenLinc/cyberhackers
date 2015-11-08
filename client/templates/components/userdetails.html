@@ -1,28 +1,48 @@
 <template name="userdetails">
-<ul>
-	<li>{{handle}}</li>
-	<li>Strikes: {{stikes}}</li>
+	
+	<div class="panel panel-user">
+		Logged in as {{handle}}
+	</div>
 
-	<li class="panel_debug {{verbpanel_class}}">Verbs: 
+	<div class="panel panel-strikes">
+		{{stikes}}
+	</div>
+	
+	<div class="panel panel-console">
+		<div class="console">
+			<div class="console-content">
+				{{#each consoleentries}}
+					<div class="{{cssclass}}">{{{text}}}</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	
+	{{#if command}}
+	<div class="panel panel-command">
+		{{command}}
+
+		<div class="progressbar mod-danger">
+			<div class="progressbar-fill" style="width:{{countdown_percent}}%;"></div>
+			<div class="progressbar-label">{{countdown}}</div>
+		</div>
+	</div>
+	{{/if}}
+
+	<div class="panel panel-commandlist {{verbpanel_class}}">Verbs: 
 		<ol>
 			{{#each command_verbs}}
 				<li>{{this}}</li>
 			{{/each}}
 		</ol>
-	</li>
+	</div>
 
-	<li class="panel_debug {{objectpanel_class}}">Objects: 
+	<div class="panel panel-commandlist {{objectpanel_class}}">Objects: 
 		<ol>
 			{{#each command_objects}}
 				<li>{{this}}</li>
 			{{/each}}
 		</ol>
-	</li>
+	</div>
 
-	{{#if command}}
-		<li>Command: {{command}}</li>
-		<li>Countdown: {{countdown}}</li>
-		<li><div class="countdownbar" style="width:{{countdown_percent}}%;"></div></li>
-	{{/if}}
-</ul>
 </template>
