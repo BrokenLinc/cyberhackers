@@ -26,16 +26,56 @@ Meteor.startup(function () {
 
 function generateUserVerbs() {
 	var a = randomSubset([
-		{text:'fire', cssclass:'flame'}
-	], 1);
+		{text: 'blast',		cssclass:''},
+		{text: 'burn',		cssclass:''},
+		{text: 'clean',		cssclass:''},
+		{text: 'clear',		cssclass:''},
+		{text: 'close',		cssclass:''},
+		{text: 'configure',	cssclass:''},
+		{text: 'empty',		cssclass:''},
+		{text: 'fire',		cssclass:''},
+		{text: 'flash',		cssclass:''},
+		{text: 'flush',		cssclass:''},
+		{text: 'open',		cssclass:''},
+		{text: 'overload',	cssclass:''},
+		{text: 'promote',	cssclass:''},
+		{text: 'proxy',		cssclass:''},
+		{text: 'purge',		cssclass:''},
+		{text: 'rebase',	cssclass:''},
+		{text: 'restart',	cssclass:''},
+		{text: 'rootkit',	cssclass:''},
+		{text: 'scrub',		cssclass:''},
+		{text: 'shutdown',	cssclass:''},
+	], 6);
 	console.log(a);
 	return a;
 }
 
 function generateUserObjects() {
 	var a = randomSubset([
-		{text:'firewall', cssclass:'wall'}
-	], 1);
+		{text: 'host IP', 		cssclass:''},
+		{text: 'DNS server', 	cssclass:''},
+		{text: 'socket layer', 	cssclass:''},
+		{text: 'backdoor', 		cssclass:''},
+
+		{text: 'hard drive', 	cssclass:''},
+		{text: 'master drive', 	cssclass:''},
+		{text: 'backup drive', 	cssclass:''},
+
+		{text: 'admin portal', 	cssclass:''},
+		{text: 'SSL layer', 	cssclass:''},
+		
+		{text: 'CPU', 			cssclass:''},
+		{text: 'mainframe CPU', cssclass:''},
+
+		{text: 'RAM slots', 	cssclass:''},
+		{text: 'PCI slots', 	cssclass:''},
+		{text: 'parallel ports', cssclass:''},
+		{text: 'USB ports', 	cssclass:''},
+
+		{text: 'system root', 	cssclass:''},
+		{text: 'auth token', 	cssclass:''},
+	], 6);
 	console.log(a);
 	return a;
 }

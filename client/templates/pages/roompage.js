@@ -27,24 +27,24 @@ function onKeyDown(e){
 	if (e.which == 27) { // ESC key
 		// If the verbs panel is open, close it
 		// Otherwise open the verbs panel
-		panelstate(panelstate() == 'OBJECT'? 'NONE' : 'OBJECT');
+		panelstate(panelstate() == 'VERB'? 'NONE' : 'VERB');
 	} else if(e.which >= 49 && e.which <= 57) { // Keys 1 through 9
 		var index = e.which - 49; // convert to 0 through 8 index
 		var currentUser = utils.currentUser();
 
-		if(panelstate() == 'OBJECT') {
+		if(panelstate() == 'VERB') {
 			// Cache the first selection
-			Session.set('commandobject', currentUser.command_objects[index]);
+			Session.set('commandverb', currentUser.command_verbs[index]);
 			// Proceed to next step
-			panelstate('VERB');
-		} else if(panelstate() == 'VERB') {
+			panelstate('OBJECT');
+		} else if(panelstate() == 'OBJECT') {
 			// Construct the full command
 			var command = [
-				currentUser.command_verbs[index].text, 
-				Session.get('commandobject').text
+				Session.get('commandverb').text,
+				currentUser.command_objects[index].text
 			].join(' the ');
 			// Clear the previous cached selection
-			Session.set('commandobject', null);
+			Session.set('commandverb', null);
 			// Close the panels
 			panelstate('NONE');
 			// Send the command
