@@ -3,19 +3,10 @@ Meteor.startup(function () {
 	// Client creates a new random user immediately
 	Meteor.call('newUser', { 
 			handle: utils.makehandle(),
-			command_verbs: [
-				generator.templates.verb(),
-				generator.templates.verb(),
-				generator.templates.verb()
-			],
-			command_objects: [
-				generator.templates.noun(),
-				generator.templates.noun(),
-				generator.templates.noun()
-			]
+			command_verbs: generateUserVerbs(),
+			command_objects: generateUserObjects()
 		}, 
 		function(error, id) {
-			//console.log('usercreated');
 			Session.set('userid', id)
 		}
 	);
@@ -32,3 +23,35 @@ Meteor.startup(function () {
 	}
 
 });
+
+function generateUserVerbs() {
+	var a = randomSubset([
+		{text:'fire', cssclass:'flame'}
+	], 1);
+	console.log(a);
+	return a;
+}
+
+function generateUserObjects() {
+	var a = randomSubset([
+		{text:'firewall', cssclass:'wall'}
+	], 1);
+	console.log(a);
+	return a;
+}
+
+function randomSubset(sourceArray, numberOfElements) {
+	var arr = []
+	while(arr.length < numberOfElements){
+		var randomnumber=Math.floor(Math.random()*sourceArray.length)
+		var found=false;
+		for(var i=0;i<arr.length;i++){
+			if(arr[i]==randomnumber){found=true;break}
+		}
+		if(!found)arr[arr.length]=randomnumber;
+	}
+	for(var i=0;i<arr.length;i++){
+		arr[i] = sourceArray[arr[i]];
+	}
+	return arr;
+}

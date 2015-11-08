@@ -1,4 +1,4 @@
-var questionEverySeconds = 10; //Could be a config value
+var questionEverySeconds = 7; //Could be a config value
 
 Meteor.methods({
 
@@ -50,8 +50,8 @@ Meteor.methods({
 		users.forEach(function(user){
 			if(i == actorIndex) {
 				command = [
-					utils.pickone(user.command_verbs),
-					utils.pickone(user.command_objects)
+					utils.pickone(user.command_verbs).text,
+					utils.pickone(user.command_objects).text
 				].join(' the ');
 			}
 			i++;

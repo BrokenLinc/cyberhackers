@@ -3,6 +3,7 @@ Meteor.startup(function(){
 		{text: 'Logging in...'},
 		{text: 'Ready.'}
 	]);
+	Session.set('slampercent', 0);
 });
 
 Template.userdetails.helpers({
@@ -27,6 +28,12 @@ Template.userdetails.helpers({
 			countArr.push({});
 		}
 		return countArr;
+	},
+	slam_percent: function() {
+		return Session.get('slampercent');
+	},
+	plusOne: function(index) {
+		return index+1;
 	}
 });
 
@@ -39,11 +46,18 @@ Template.userdetails.onDestroyed(function(){
 });
 
 function onKeydown(e){
-	if (e.which === 27) return; // ESC key
+	if (e.which === 32 || e.which < 65 || e.which > 90) return; // ESC key
 
 	var consoleentries = Session.get('consoleentries');
 	var lastLine = consoleentries[consoleentries.length-1];
 	var textleft = lastLine.textleft;
+
+	var slampercent = Session.get('slampercent')+0.25;
+	if(slampercent>=100) {
+		//TODO: get a clue
+		slampercent = 0;
+	}
+	Session.set('slampercent', slampercent);
 
 	if(lastLine.textleft) {
 		var chars = utils.rint(1,3);

@@ -21,5 +21,8 @@ Template.roomdetails.helpers({
 Template.roomdetails.events({
 	'click .evt-startgame': function() {
 		Meteor.call('startGame', this._id);
+	},
+	'click .evt-endgame': function() {
+		Meteor.call('endGame', this._id);
 	}
 });

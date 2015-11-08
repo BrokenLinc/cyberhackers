@@ -7,6 +7,24 @@
 	animation-name: delayedfade;
 	animation-duration: 1s;
 }
+.centered {
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+// Game junk
+.game-state {
+	position:absolute;
+	display:block;
+
+	top:4vw;
+	left:8vw;
+	padding:2vw;
+
+	font-size:7vw;
+	line-height: 6vw;
+}
 
 // Block item list
 ul.mod-blocked {
@@ -31,6 +49,21 @@ ul.mod-blocked {
 	background: black;
 	border: 0.4vw solid @green;
 	padding: 0.8vw;
+	box-shadow: 1vw 1vw 0 fade(black, 65);
+
+	&.mod-danger {
+		border-color: @red;
+		color: @red;
+	}
+}
+.panel-label {
+	font-size:3vw;
+	line-height: 1.5em;
+	margin-bottom: 0.8vw;
+
+	text-align: center;
+	text-transform: uppercase;
+	color:white;
 }
 .panel-gameclock {
 	z-index: 15;
@@ -61,7 +94,7 @@ ul.mod-blocked {
 .panel-userlist {
 	z-index: 20;
 
-	top:33vw;
+	top:22vw;
 	right:4vw;
 	width:36vw;
 }
@@ -69,15 +102,15 @@ ul.mod-blocked {
 	display: none;
 }
 .panel-strikes {
-	z-index:2000;
+	z-index:5;
 
 	border-color:red;
 	font-size:5vw;
 	padding:2vw;
 	width:24.5vw;
-	top:22vw;
-	right:15.5vw;
-	height: 9.5vw;
+	top:4vw;
+	left:53vw;
+	height: 10vw;
 
 	color:@red;
 }
@@ -93,21 +126,27 @@ ul.mod-blocked {
 .panel-command {
 	z-index: 900;
 
+	.centered;
+
 	width:80vw;
-	top:40vw;
-	left:10vw;
+	top:60%;
 }
 .panel-commandlist {
 	display:none;
 
+	.centered;
+
 	z-index: 1000;
-	width:40vw;
-	top:17vw;
-	left:30vw;
+	width:44vw;
 
 	&.state-open {
 		display:block;
 	}
+}
+.panel-loggedout {
+	.centered;
+	font-size:2vw;
+	padding:2vw;
 }
 
 // Hacker console
@@ -141,8 +180,12 @@ ul.mod-blocked {
 // Progress bar
 .progressbar {
 	height:100%;
+	background: fade(@green, 30);
+	position: relative;
 
 	&.mod-danger {
+		background: fade(@red, 30);
+
 		.progressbar-fill {
 			background: @red;
 		}
@@ -151,7 +194,45 @@ ul.mod-blocked {
 .progressbar-fill {
 	background: @green;
 	height:100%;
+	min-height: 1.5vw;
 }
 .progressbar-label {
-	
+	position:absolute;
+	top:50%;
+	left:0;
+	width:100%;
+	transform: translate(0, -50%);
+
+	color:white;
+	text-align: center;
+}
+
+ol.mod-commandlist {
+	margin:0;
+	list-style:none;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column wrap;
+	align-content: center;
+	flex-direction: row;
+
+	>li {
+		margin:0.4vw;
+		width:13vw;
+		height:13vw;
+		padding-top:2vw;
+		
+		text-transform: uppercase;
+		background:@green;
+		color:@black;
+		text-align: center;
+		font-weight: bold;
+
+		>i {
+			font-size: 5vw;
+			line-height: 7vw;
+		}
+	}
 }

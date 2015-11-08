@@ -1,15 +1,17 @@
 <template name="roomdetails">
 
+	{{#if isPregame}}
+		<div class="game-state">Connecting...</div>
+	{{/if}}
+
 	{{#if isPlaying}}
 	<div class="panel panel-gameclock">
 		<i class="icon-clock"></i> {{countdown}}
 	</div>
+	{{/if}}
 
-	<div class="panel panel-clueprogress">
-		<div class="progressbar">
-			<div class="progressbar-fill" style="width:50%;"></div>
-		</div>
-	</div>
+	{{#if isOver}}
+		<div class="game-state">Game Over</div>
 	{{/if}}
 
 	<div class="gamemenu">
@@ -18,7 +20,7 @@
 		{{/if}}
 
 		{{#if isPlaying}}
-		<button class="evt-startgame"><i class="icon-cw"></i> Restart game</button>
+		<button class="evt-endgame"><i class="icon-cw"></i> End game</button>
 		{{/if}}
 
 		{{#if isPregame}}
