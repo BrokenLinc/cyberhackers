@@ -4,6 +4,9 @@ Template.roompage.helpers({
 	},
 	room: function () {
 		return Rooms.findOne(this.room_id);
+	},
+	isPlaying: function() {
+		return Rooms.findOne(this.room_id).state == 'PLAYING';
 	}
 });
 

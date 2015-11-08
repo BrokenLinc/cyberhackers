@@ -1,11 +1,9 @@
 <template name="userdetails">
-	
-	<div class="panel panel-user">
-		Logged in as {{handle}}
-	</div>
 
 	<div class="panel panel-strikes">
-		{{stikes}}
+		{{#each loopCount strikes}}
+			<i class="icon-cancel-squared"></i>
+		{{/each}}
 	</div>
 	
 	<div class="panel panel-console">

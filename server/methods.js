@@ -68,7 +68,7 @@ Meteor.methods({
 				// Set recipient command expiration, otherwise clear it 
 				commandExpiration: i==recipientIndex? utils.nowTicks() + expiresInSeconds*1000 : null,
 				// Give the user a strike if they still had a command lingering
-				strikes: user.command? user.strikes+1 : user.strikes
+				strikes: user.command? Math.min(3, user.strikes+1) : user.strikes
 			}});
 			i++;
 		});

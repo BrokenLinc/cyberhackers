@@ -1,12 +1,20 @@
 <template name="roompage">
 	{{#if currentUser}}
+	
+		<div class="panel panel-user">
+			Logged in as {{handle}}
+		</div>
+
 		{{#with room}}
 			{{> roomdetails}}
 	  	{{/with}}
 
-		{{#with currentUser}}
-			{{> userdetails}}
-		{{/with}}
+		{{#if isPlaying}}
+			{{#with currentUser}}
+				{{> userdetails}}
+			{{/with}}
+		{{/if}}
+
 	{{else}}
 		<div class="delayedfade">Logged out due to inactivity.</div>
 	{{/if}}

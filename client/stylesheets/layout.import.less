@@ -52,7 +52,8 @@ ul.mod-blocked {
 	height: 7vw;
 	
 }
-.panel-gamemenu {
+.gamemenu {
+	position:absolute;
 	right:4vw;
 	top:4vw;
 	
@@ -60,7 +61,7 @@ ul.mod-blocked {
 .panel-userlist {
 	z-index: 20;
 
-	top:24vw;
+	top:33vw;
 	right:4vw;
 	width:36vw;
 }
@@ -68,7 +69,17 @@ ul.mod-blocked {
 	display: none;
 }
 .panel-strikes {
-	display: none;
+	z-index:2000;
+
+	border-color:red;
+	font-size:5vw;
+	padding:2vw;
+	width:24.5vw;
+	top:22vw;
+	right:15.5vw;
+	height: 9.5vw;
+
+	color:@red;
 }
 .panel-console {
 	z-index: 10;
