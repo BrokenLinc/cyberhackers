@@ -13,6 +13,9 @@ Template.userdetails.helpers({
 	countdown_percent: function() {
 		return Math.max(0, utils.timeDiffReactive(this.commandExpiration, this.commandDuration) * 100);
 	},
+	command_active: function() {
+		return this.command && utils.timeDiffReactive(this.commandExpiration, this.commandDuration) > 0;
+	},
 	verbpanel_class: function() {
 		return Session.get('commandpanelopen')=='VERB'? 'state-open' : '';
 	},

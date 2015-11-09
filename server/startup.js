@@ -5,6 +5,6 @@ Meteor.startup(function () {
 		Meteor.call('removeIdleUsers');
 		Meteor.call('endExpiredGames');
 		Meteor.call('issueCommandsToRooms');
-	}, 1000);
+	}, 500);
 
 });

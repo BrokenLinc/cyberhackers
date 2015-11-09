@@ -29,9 +29,9 @@
 	</div>
 
 	<div class="panel panel-userlist">
-		<ul class="mod-blocked">
+		<ul class="userlist mod-blocked">
 			{{#each users}}
-			<li><i class="icon-user-1"></i> {{handle}}</li>
+			{{> userlistitem}}
 			{{/each}}
 		</ul>
 	</div>

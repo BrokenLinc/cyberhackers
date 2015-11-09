@@ -35,6 +35,11 @@ ul.mod-blocked {
 		border:0 none;
 		background: fade(@green, 30);
 		padding: 0.6vw 1.2vw;
+
+		&.mod-danger {
+			color:@red;
+			background: fade(@red, 30);
+		}
 	}
 	li + li {
 		margin-top: 0.6vw;
@@ -97,6 +102,9 @@ ul.mod-blocked {
 	top:22vw;
 	right:4vw;
 	width:36vw;
+}
+.userlist-strikes {
+	float:right;
 }
 .panel-user {
 	display: none;

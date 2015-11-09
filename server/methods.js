@@ -21,8 +21,9 @@ Meteor.methods({
 		var questionDeadline = utils.nowTicks() - 1000*questionEverySeconds;
 		
 		var rooms = Rooms.find({
-			lastCommandIssuedAt:{$lt:questionDeadline},
-			endsAt:{$gt:utils.nowTicks()}
+			state:'PLAYING',
+			lastCommandIssuedAt:{$lt:questionDeadline}
+			//endsAt:{$gt:utils.nowTicks()}
 		});
 		if(rooms.count()>0) { // Neccessary?
 			rooms.forEach(function(room) {
@@ -33,19 +34,41 @@ Meteor.methods({
 
 	// Issue a command to a room, with a countdown in seconds
 	issueCommandToRoom: function(room, expiresInSeconds) {
-		var i;
+		var i, users;
 
-		// Get the users in the room
-		var users = Users.find({room_id:room._id});
+		// Apply strike and clear command info
+		var user = Users.findOne({
+			room_id: room._id,
+			command: {$ne: null}
+		});
+		if(user) {
+			Users.update(user._id, {$set:{
+				command: null,
+				commandDuration: null,
+				commandExpiration: null,
+				strikes: user.command? Math.min(3, user.strikes+1) : user.strikes
+			}});
+		}
+
+		// Get eligible users in the room
+		users = Users.find({
+			room_id:room._id,
+			strikes: {$lt: 3}
+		});
+		if(users.count() == 0) {
+			Meteor.call('endGame', room._id);
+			return;
+		}
+
 		// Pick a random user index
 		var actorIndex = utils.rint(0, users.count()-1);
 		// Pick another random user index (could be the same, for now)
 		var recipientIndex = utils.rint(0, users.count()-1);
 		
-		var command = 'command error'; //default if something ever goes wrong
+		var command;
 
 		// Find the first user and construct a command they could execute
-		// TODO: A better way?
+		// TODO: A better way to find my index?
 		i = 0;
 		users.forEach(function(user){
 			if(i == actorIndex) {
@@ -58,18 +81,19 @@ Meteor.methods({
 		});
 
 		// Set all the users data in this room...
+		// TODO: A better way to find my index?
 		i = 0;
 		users.forEach(function(user){
-			Users.update({_id: user._id}, {$set:{
-				// Set recipient command text, otherwise clear their command
-				command: i==recipientIndex? command : '',
-				// Set recipient command duration, otherwise clear it 
-				commandDuration: i==recipientIndex? expiresInSeconds*1000 : null,
-				// Set recipient command expiration, otherwise clear it 
-				commandExpiration: i==recipientIndex? utils.nowTicks() + expiresInSeconds*1000 : null,
-				// Give the user a strike if they still had a command lingering
-				strikes: user.command? Math.min(3, user.strikes+1) : user.strikes
-			}});
+			if(i==recipientIndex) {
+				Users.update({_id: user._id}, {$set:{
+					// Set recipient command text
+					command: command,
+					// Set recipient command duration
+					commandDuration: expiresInSeconds*1000,
+					// Set recipient command expiration
+					commandExpiration: utils.nowTicks() + expiresInSeconds*1000
+				}});
+			}
 			i++;
 		});
 
