@@ -4,54 +4,53 @@ Template.roompage_debug.helpers({
 	},
 	room: function () {
 		return Rooms.findOne(this.room_id);
-	}
+	},
+	users: function() {
+		// Get all the users in this room
+		return Users.find({room_id: this.room_id});
+	},
+	enemies: function() {
+		// Get all the enemies in this room
+		return Enemies.find({room_id: this.room_id});
+	},
 });
 
-Template.roompage_debug.onCreated(function(){
-	// Always start with command panel closed
-	panelstate('NONE');
-});
+Template.roompage_debug.events({
+	'click .me-newgame': function() {
+		Meteor.call('newGame', this.room_id);
+	},
+	'click .me-startgame': function() {
+		Meteor.call('startGame', this.room_id);
+	},
+	'click .me-losegame': function() {
+		Meteor.call('loseGame', this.room_id);
+	},
+	'click .me-wingame': function() {
+		Meteor.call('winGame', this.room_id);
+	},
 
-// Catch keypresses while on this page
-Template.roompage_debug.onRendered(function(){
-	$(window).on('keydown', {room_id:this.data.room_id}, onKeyDown);
-});
-Template.roompage_debug.onDestroyed(function(){
-	$(window).off('keydown', onKeyDown);
-});
+	'click .me-enemy': function() {
+		Meteor.call('setTarget', Session.get('userid'), {
+			type: 'ENEMY',
+			id: this._id
+		})
+	},
+	'click .me-user': function() {
+		Meteor.call('setTarget', Session.get('userid'), {
+			type: 'USER',
+			id: this._id
+		})
+	},
 
-function onKeyDown(e){
-	if (e.which == 27) { // ESC key
-		// If the verbs panel is open, close it
-		// Otherwise open the verbs panel
-		panelstate(panelstate() == 'VERB'? 'NONE' : 'VERB');
-	} else if(e.which >= 49 && e.which <= 57) { // Keys 1 through 9
-		var index = e.which - 49; // convert to 0 through 8 index
-		var currentUser = utils.currentUser();
+	'click .me-execute': function() {
+		var user = utils.currentUser();
 
-		if(panelstate() == 'VERB') {
-			// Cache the first selection
-			Session.set('commandverb', currentUser.command_verbs[index]);
-			// Proceed to next step
-			panelstate('OBJECT');
-		} else if(panelstate() == 'OBJECT') {
-			// Construct the full command
-			var command = [Session.get('commandverb'), currentUser.command_objects[index]].join(' the ');
-			// Clear the previous cached selection
-			Session.set('commandverb', null);
-			// Close the panels
-			panelstate('NONE');
-			// Send the command
-			Meteor.call('submitCommand', command, e.data.room_id);
+		if(!user.target) return;
+
+		if(user.target.type == 'ENEMY') {
+			Meteor.call('harmTarget', Session.get('userid'), user.target);
+		} else if (user.target.type == 'USER') {
+			Meteor.call('helpTarget', Session.get('userid'), user.target);
 		}
 	}
-}
-
-// Session management to make the above function more readable
-function panelstate(setvalue) {
-	if(setvalue) {
-		Session.set('commandpanelopen', setvalue);
-		return setvalue;
-	}
-	return Session.get('commandpanelopen');
-}
+});

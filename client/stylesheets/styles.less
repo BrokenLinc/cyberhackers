@@ -1,0 +1,254 @@
+@keyframes delayedfade {
+    0% {opacity: 0;}
+    99% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.delayedfade {
+	animation-name: delayedfade;
+	animation-duration: 1s;
+}
+.centered {
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+@font-face {
+    font-family: 'bpdotssquaresregular';
+    src: url('fonts/BPdotsSquare-webfont.eot');
+    src: url('fonts/BPdotsSquare-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BPdotsSquare-webfont.woff') format('woff'),
+         url('fonts/BPdotsSquare-webfont.ttf') format('truetype'),
+         url('fonts/BPdotsSquare-webfont.svg#bpdotssquaresregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+	height:100%;
+	width:100%;
+}
+
+.page-debug {
+	padding:20px;
+	
+	table.mod-tabular {
+		th {
+			background:#eee;
+		}
+		th, td {
+			text-align: left;
+			padding: 0.25em 0.5em;
+			border:1px solid #999;
+		}
+	}
+}
+
+.page-game {
+	@red:#f00;
+	@green:#0f0;
+	@orange:#f90;
+	@black: black;
+	@gray: #888;
+	@borderwidth: 0.5vw;
+
+	width:100%;
+	height:100%;
+
+	background:@black;
+	color:@green;
+	font-size:1.5vw;
+	line-height: 2vw;
+	font-family:bpdotssquaresregular;
+
+	.panel {
+		position:absolute;
+	}
+	.panel-roster {
+		width:21vw;
+		bottom:2vw;
+
+		&.mod-users {
+			left:2vw;
+		}
+		&.mod-enemies {
+			right:2vw;
+		}
+	}
+
+	.rosterItem {
+		border:@borderwidth solid fade(@green, 50);
+		margin-bottom:1vw;
+		padding: 0.5vw 1vw;
+		height: 5vw;
+
+		&.mod-target {
+			color:white;
+			border-color: @green;
+		}
+	}
+	.panel-roster.mod-enemies .rosterItem {
+		border-color: fade(@orange, 50);
+		color: @orange;
+
+		&.mod-target {
+			color:white;
+			border-color: @orange;
+		}
+	}
+
+	.rosterItem.mod-dead {
+		color:red !important;
+		border-color:fade(red, 50) !important;
+
+		.hpbar div {
+			&.empty {
+				background:fade(@red, 30);
+				border-color: @red;
+			}
+		}
+	}
+
+	.hpbar {
+		height:2vw;
+		margin-top: 0.5vw;
+
+		div {
+			display:inline-block;
+			background:@green;
+			width:1vw;
+			height:100%;
+			margin-right:0.25vw;
+			border:1px solid @green;
+
+			&.empty {
+				background:fade(@green, 30);
+			}
+		}
+	}
+	.panel-roster.mod-enemies .hpbar div {
+		background:@orange;
+		border-color:@orange;
+
+		&.empty {
+			background:fade(@orange, 30);
+		}
+	}
+
+	.panel-game {
+		width:96vw;
+		text-align:center;
+		top:2vw;
+		left:2vw;
+		padding: 0.5vw 1vw;
+
+		.title {
+			font-size:5vw;
+			line-height:7vw;
+
+			.title.mod-lost {
+				color: @red;
+				border-color:@red;
+			}
+		}
+	}
+
+	button {
+		padding:0 1.2em;
+
+		font-weight: bold;
+		text-transform: uppercase;
+		line-height: 2.4em;
+
+		background: transparent;
+		border: @borderwidth solid @green;
+		color:@green;
+
+		&:hover {
+			background-color:@green;
+			color:@black;
+		}
+	}
+
+	// Hacker console
+	.panel-console {
+		z-index: 10;
+		border:@borderwidth solid fade(@green, 50);
+
+		top:2vw;
+		left:25vw;
+		width: 50vw;
+		bottom:2vw;
+	}
+	.console {
+		height:100%;
+		overflow: hidden;
+		position: relative;
+	}
+	.console-content {
+		position:absolute;
+		padding:10px;
+		bottom:0;
+
+		> div {
+			&:before {
+				content: "> ";
+			}
+
+			&:last-child {
+			}
+		}
+		> .status {
+			color:@gray;
+		}
+		> .error {
+			color:@red;
+		}
+	}
+
+	.panel-clueprogress {
+		z-index: 20;
+
+		top:13.5vw;
+		left:12vw;
+		width: 76vw;
+		height: 7vw;
+		
+	}
+
+	// Progress bar
+	.progressbar {
+		height:100%;
+		background: fade(@green, 30);
+		position: relative;
+
+		&.mod-danger {
+			background: fade(@red, 30);
+
+			.progressbar-fill {
+				background: @red;
+			}
+		}
+	}
+	.progressbar-fill {
+		background: @green;
+		height:100%;
+		min-height: 1.5vw;
+	}
+	.progressbar-label {
+		position:absolute;
+		top:50%;
+		left:0;
+		width:100%;
+		transform: translate(0, -50%);
+
+		color:white;
+		text-align: center;
+	}
+
+	.panel-simple {
+		padding:2vw;
+		border:@borderwidth solid fade(@green, 50);
+		.centered;
+	}
+}

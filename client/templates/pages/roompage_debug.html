@@ -1,17 +1,73 @@
 <template name="roompage_debug">
+<div class="page-debug">
 	{{#if currentUser}}
-		<h6><a href="/">Back to Lobby</a></h6>
+	
+		<div class="panel panel-user">
+			Logged in as {{currentUser.handle}}
+		</div>
 
 		{{#with room}}
-			<h3>room {{_id}}</h3>
-			{{> roomdetails_debug}}
+			<h1>Room: {{_id}}</h1>
+
+			<h3>State: {{state}}</h3>
 	  	{{/with}}
 
-		{{#with currentUser}}
-			<h3>currentUser debug</h3>
-			{{> userdetails_debug}}
-		{{/with}}
+		<h3>Users in this room:</h3>
+		<table class="mod-tabular">
+			<tr>
+				<th>Handle</th>
+				<th>HP</th>
+				<th>Target</th>
+				<th>Status</th>
+			</tr>
+			{{#each users}}
+			<tr class="me-user">
+				<td>{{handle}}</td>
+				<td>{{hp}}</td>
+				<td>
+					{{#if target}}
+						{{target.type}}
+						{{target.id}}
+					{{else}}
+						n/a
+					{{/if}}
+				</td>
+				<td>
+					{{#if isPlaying}}
+						Player
+					{{else}}
+						Observer
+					{{/if}}
+				</td>
+			</tr>
+			{{/each}}
+		</table>
+
+		<h3>Enemies in this room:</h3>
+		<table class="mod-tabular">
+			<tr>
+				<th>Handle</th>
+				<th>HP</th>
+			</tr>
+			{{#each enemies}}
+			<tr class="me-enemy">
+				<td>{{handle}}</td>
+				<td>{{hp}}</td>
+			</tr>
+			{{/each}}
+		</table>
+
+		<h3>Play actions:</h3>
+	  	<button class="me-execute">Execute</button>
+
+		<h3>Game actions:</h3>
+	  	<button class="me-newgame">New Game</button>
+	  	<button class="me-startgame">Start Game</button>
+	  	<button class="me-wingame">Win Game</button>
+	  	<button class="me-losegame">Lose Game</button>
+
 	{{else}}
-		<div class="lagsafe">Logged out due to inactivity.</div>
+		<div class="panel panel-loggedout delayedfade">Logged out due to inactivity.</div>
 	{{/if}}
+</div>
 </template>

@@ -1,21 +1,77 @@
 <template name="roompage">
+<div class="page-game">
 	{{#if currentUser}}
-	
-		<div class="panel panel-user">
-			Logged in as {{handle}}
-		</div>
+		
+		{{#if isPreGame}}
 
-		{{#with room}}
-			{{> roomdetails}}
-	  	{{/with}}
+			<div class="panel panel-roster mod-users">
+				{{#each users}}
+				<div class="rosterItem me-user">
+					<div>{{handle}}</div>
+				</div>
+				{{/each}}
+			</div>
 
-		{{#if isPlaying}}
-			{{#with currentUser}}
-				{{> userdetails}}
-			{{/with}}
+			<div class="panel panel-game">
+				<div class="title">New Game</div>
+				<button class="me-startgame">Start Game</button>
+			</div>
+
+		{{else}}
+
+			<div class="panel panel-roster mod-users">
+				{{#each players}}
+				<div class="rosterItem me-user {{targetClass}} {{hpClass}}">
+					<div>{{handle}}</div>
+					<div class="hpbar">{{#each hpbars 10 hp}}<div class="{{cssClass}}"></div>{{/each}}</div>
+				</div>
+				{{/each}}
+			</div>
+
+			<div class="panel panel-roster mod-enemies">
+				{{#each enemies}}
+				<div class="rosterItem me-enemy {{targetClass}} {{hpClass}}">
+					<div>{{handle}}</div>
+					<div class="hpbar">{{#each hpbars 10 hp}}<div class="{{cssClass}}"></div>{{/each}}</div>
+				</div>
+				{{/each}}
+			</div>
+
+			{{#if isGamePlaying}}
+
+				<div class="panel panel-clueprogress">
+					<div class="progressbar">
+						<div class="progressbar-fill" style="width:{{slam_percent}}%;"></div>
+					</div>
+				</div>
+				<div class="panel panel-console">
+					<div class="console">
+						<div class="console-content">
+							{{#each consoleentries}}
+								<div class="{{cssclass}}">{{{text}}}</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+				
+			{{/if}}
+			
+			{{#if isGameOver}}
+				<div class="panel panel-game">
+					{{#if isGameWon}}
+						<div class="title mod-won">Mission Successful</div>
+					{{/if}}
+					{{#if isGameLost}}
+						<div class="title mod-lost">Mission Failed</div>
+					{{/if}}
+
+					<button class="me-newgame">New Game</button>
+				</div>
+			{{/if}}
+
 		{{/if}}
-
 	{{else}}
-		<div class="panel panel-loggedout delayedfade">Logged out due to inactivity.</div>
+		<div class="panel panel-simple delayedfade">Logged out due to inactivity. Refresh to log in.</div>
 	{{/if}}
+</div>
 </template>

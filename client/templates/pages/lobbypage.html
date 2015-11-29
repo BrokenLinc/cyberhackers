@@ -5,7 +5,7 @@
 
 	<ul>
 	{{#each rooms}}
-		<li>{{> roomlistitem_debug}}</li>
+		<li><a href="/{{_id}}">{{_id}}</a></li>
 	{{/each}}
 	</ul>
 
@@ -13,7 +13,7 @@
 
 	<ul>
 	{{#each users}}
-		<li>{{> userlistitem_debug}}</li>
+		<li>{{handle}}</li>
 	{{/each}}
 	</ul>
 
