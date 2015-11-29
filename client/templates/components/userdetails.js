@@ -57,23 +57,29 @@ function onKeydown(e){
 
 	var slampercent = Session.get('slampercent')+0.25;
 	if(slampercent>=100) {
+		
 		//TODO: get a clue
+
 		slampercent = 0;
 	}
 	Session.set('slampercent', slampercent);
 
 	if(lastLine.textleft) {
-		var chars = utils.rint(1,3);
+		var chars = 10; //utils.rint(1,5); //from 1 to 10 to 100
 		var nextchar = textleft.substr(0,chars);
 		lastLine.text += nextchar;
 		lastLine.textleft = textleft.substr(chars);
-	} else {
-		var line = generator.generate('commandline');
-		if(!line.auto) {
-			line.textleft = line.text;
-			line.text = '';
+	}
+	if(!lastLine.textleft) {
+		var line;
+		while(!line || line.cssclass) {
+			line = generator.generate('commandline');
+			if(!line.auto) {
+				line.textleft = line.text;
+				line.text = '';
+			}
+			consoleentries.push(line);
 		}
-		consoleentries.push(line);
 	}
 
 	Session.set('consoleentries', consoleentries);

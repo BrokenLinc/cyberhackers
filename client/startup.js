@@ -47,7 +47,7 @@ function generateUserVerbs() {
 		{text: 'scrub',		cssclass:''},
 		{text: 'shutdown',	cssclass:''},
 	], 6);
-	console.log(a);
+	//console.log(a);
 	return a;
 }
 
@@ -76,7 +76,7 @@ function generateUserObjects() {
 		{text: 'system root', 	cssclass:''},
 		{text: 'auth token', 	cssclass:''},
 	], 6);
-	console.log(a);
+	//console.log(a);
 	return a;
 }
 

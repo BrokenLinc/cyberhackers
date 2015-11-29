@@ -48,7 +48,9 @@ function onKeyDown(e){
 			// Close the panels
 			panelstate('NONE');
 			// Send the command
-			Meteor.call('submitCommand', command, e.data.room_id);
+			Meteor.call('submitCommand', command, e.data.room_id, function(error, numberUpdated){
+				//console.log(numberUpdated + ' hackers saved');
+			});
 		}
 	}
 }

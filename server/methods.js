@@ -1,4 +1,5 @@
 var questionEverySeconds = 7; //Could be a config value
+var gameDurationInMinutes = 2; //Could be a config value
 
 Meteor.methods({
 
@@ -101,5 +102,88 @@ Meteor.methods({
 		Rooms.update(room._id, {$set: {
 			lastCommandIssuedAt: utils.nowTicks()
 		}})
+	},
+
+	// Create the room only if it doesn't exist.
+	// Note: I didn't use upsert here because I don't want to overwrite anything
+	newRoom: function(roomdata) {
+		var existing_room = Rooms.findOne(roomdata._id);
+		if(existing_room) {
+			return existing_room._id;
+		}
+
+		return Rooms.insert(roomdata);
+	},
+
+	// Insert a new user
+	newUser: function(user) {
+		user.updatedAt = utils.nowTicks();
+		return Users.insert(user);
+	},
+
+	// Update a user
+	updateUser: function(id, user) {
+		user.updatedAt = utils.nowTicks();
+		return Users.update(id, {$set: user});
+	},
+
+	// Delete a user
+	deleteUser: function(id) {
+		Users.remove(id);
+	},
+
+	// Users are routinely purged for unactivity. This prevents it.
+	keepaliveUser: function(id) {
+		return Users.update(id, {$set: {updatedAt:utils.nowTicks()}});
+	},
+
+	// Start a game in a room, resetting user data and setting intial game values
+	startGame: function(room_id) {
+		Rooms.update(room_id, {$set: {
+			lastCommandIssuedAt: utils.nowTicks(),
+			endsAt: utils.nowTicks() + gameDurationInMinutes*60*1000,
+			state:'PLAYING'
+		}});
+		Users.update({room_id: room_id}, {$set:{
+			command:null,
+			commandDuration: null,
+			commandExpiration: null,
+			strikes:0
+		}}, {multi:true});
+	},
+	// End a game
+	endGame: function(room_id) {
+		if(Meteor.isClient) {
+			Session('slampercent', 0);
+		}
+		Rooms.update(room_id, {$set:{state:'GAME_OVER'}});
+		Users.update({room_id:room_id}, {$set:{
+			command: null,
+			commandDuration: null,
+			commandExpiration: null
+		}}, {multi: true});
+	},
+
+	// A user can submit a command, and it will clear out for users any in this room
+	submitCommand: function(command, room_id) {
+		return Users.update(
+			{
+				command:command,
+				room_id: room_id
+			},
+			{$set:{
+				command: null,
+				commandDuration: null,
+				commandExpiration: null
+			}}, {multi:true}
+		);
+	},
+
+	assignRandomWordToRoom: function(room_id) {
+		var n = Dictionary.find().count();
+		var r = Math.floor(Math.random() * n);
+		var word = Dictionary.findOne({},{skip: r});
+
+		Rooms.update(room_id, {$set:{word:word.Word}});
 	}
 });
